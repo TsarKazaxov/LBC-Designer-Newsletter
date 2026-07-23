@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Signal — Weekly Design & Talent Brief</title>
+<style>
+  :root {
+    color-scheme: light;
+    --ink:#101324;
+    --ink-soft:#4a5170;
+    --muted:#8790a8;
+    --line:#eceef4;
+    --line-soft:#f4f5f9;
+    --blue:#0E2AE7;
+    --blue-2:#4678FE;
+    --blue-wash:#eef2ff;
+    --green:#02B86F;
+    --amber:#F77F00;
+    --paper:#ffffff;
+    --bg:#fbfbfd;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body {
+    font-family:'Poppins','Segoe UI',-apple-system,BlinkMacSystemFont,Roboto,Arial,sans-serif;
+    background:var(--bg); color:var(--ink);
+    -webkit-font-smoothing:antialiased; line-height:1.55;
+  }
+  .paper { max-width:760px; margin:0 auto; background:var(--paper); }
+  .hidden { display:none !important; }
+
+  /* Masthead */
+  .masthead { padding:34px 40px 20px; border-bottom:2px solid var(--ink); }
+  @media(max-width:560px){ .masthead{ padding:26px 22px 16px; } }
+  .kicker { font-size:10.5px; font-weight:700; letter-spacing:2.4px; text-transform:uppercase; color:var(--blue); }
+  .title { font-size:46px; font-weight:800; letter-spacing:-1.5px; line-height:1; margin:8px 0 6px; }
+  .title span { color:var(--blue); }
+  .dek { font-size:13.5px; color:var(--ink-soft); max-width:520px; }
+  .meta { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+  .chip { font-size:10.5px; font-weight:600; color:var(--ink-soft); background:var(--line-soft);
+          border:1px solid var(--line); border-radius:20px; padding:4px 11px; }
+  .chip.read { background:var(--blue); color:#fff; border-color:var(--blue); }
+
+  /* Nav / archive control */
+  nav { display:flex; align-items:center; gap:10px; padding:12px 40px; border-bottom:1px solid var(--line); }
+  @media(max-width:560px){ nav{ padding:12px 22px; flex-wrap:wrap; } }
+  nav label { font-size:11px; font-weight:700; color:var(--muted); }
+  nav select {
+    font-family:inherit; font-size:12.5px; font-weight:600; color:var(--ink);
+    border:1px solid var(--line); border-radius:20px; padding:6px 12px; background:var(--paper);
+  }
+  .archive-banner {
+    margin:0 40px; margin-top:14px; background:var(--blue-wash); border:1px solid var(--blue-wash);
+    border-radius:10px; padding:10px 14px; font-size:12px; color:var(--ink);
+    display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  }
+  @media(max-width:560px){ .archive-banner{ margin:14px 22px 0; } }
+  .archive-banner button {
+    font-family:inherit; font-size:11.5px; font-weight:700; color:#fff; background:var(--blue-2);
+    border:none; border-radius:16px; padding:6px 12px; cursor:pointer;
+  }
+
+  /* Section scaffolding */
+  section { padding:26px 40px; border-bottom:1px solid var(--line); }
+  @media(max-width:560px){ section{ padding:24px 22px; } }
+  .eyebrow { display:flex; align-items:baseline; gap:9px; margin-bottom:14px; }
+  .eyebrow .num { font-size:11px; font-weight:800; color:var(--blue-2); }
+  .eyebrow h2 { font-size:19px; font-weight:800; letter-spacing:-0.4px; }
+  .eyebrow .tail { margin-left:auto; font-size:10.5px; font-weight:600; color:var(--muted); }
+
+  /* TL;DR */
+  .tldr { display:grid; gap:11px; }
+  .tl { display:flex; gap:13px; align-items:flex-start; }
+  .tl .b { flex:0 0 26px; height:26px; border-radius:8px; background:var(--blue-wash);
+           color:var(--blue); font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .tl p { font-size:13.5px; color:var(--ink-soft); }
+  .tl strong { color:var(--ink); font-weight:700; }
+
+  /* Stat tiles */
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  @media(max-width:560px){ .stats{ grid-template-columns:repeat(2,1fr); } }
+  .stat { border:1px solid var(--line); border-radius:13px; padding:14px 14px 12px; background:var(--paper); }
+  .stat .big { font-size:26px; font-weight:800; letter-spacing:-1px; line-height:1; color:var(--ink); }
+  .stat .big em { font-style:normal; font-size:14px; color:var(--muted); font-weight:700; }
+  .stat .lbl { font-size:11px; color:var(--ink-soft); margin-top:6px; line-height:1.35; }
+  .stat .who { font-size:9.5px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; color:var(--blue-2); margin-bottom:7px; }
+  .stat .cf { font-size:9px; font-weight:700; color:var(--green); margin-top:7px; }
+  .stat.up .big { color:var(--green); }
+
+  /* Momentum bars */
+  .bars { margin-top:16px; display:grid; gap:12px; }
+  .bar-row .cap { display:flex; justify-content:space-between; font-size:11.5px; margin-bottom:5px; }
+  .bar-row .cap b { font-weight:700; color:var(--ink); }
+  .bar-row .cap span { color:var(--muted); font-weight:600; }
+  .track { height:9px; background:var(--line-soft); border-radius:6px; overflow:hidden; display:flex; }
+  .fill { height:100%; border-radius:6px; }
+  .fill.a { background:var(--blue-2); }
+
+  /* Move cards */
+  .move { padding:14px 0; border-top:1px solid var(--line-soft); }
+  .move:first-of-type { border-top:none; }
+  .move .h { display:flex; align-items:center; gap:9px; margin-bottom:5px; flex-wrap:wrap; }
+  .move .name { font-size:14px; font-weight:800; color:var(--ink); }
+  .cat { font-size:9px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase;
+         color:var(--blue-2); background:var(--blue-wash); border-radius:6px; padding:2px 7px; }
+  .cf-pill { margin-left:auto; font-size:9.5px; font-weight:700; color:#fff; border-radius:20px; padding:2px 9px; white-space:nowrap; }
+  .cf-hi{ background:var(--green); } .cf-mid{ background:var(--blue-2); } .cf-lo{ background:var(--amber); }
+  .move p { font-size:13px; color:var(--ink-soft); }
+  .move p b { color:var(--ink); font-weight:700; }
+
+  .quiet { font-size:12px; color:var(--muted); background:var(--line-soft); border-radius:10px; padding:11px 14px; margin-top:14px; line-height:1.5; }
+  .quiet b { color:var(--ink-soft); }
+
+  /* Two-col compact lists */
+  .list { display:grid; gap:9px; }
+  .li { font-size:13px; color:var(--ink-soft); padding-left:15px; position:relative; }
+  .li::before { content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:var(--blue-2); }
+  .li b { color:var(--ink); font-weight:700; }
+  .li .s { color:var(--muted); font-size:11px; }
+
+  /* Mirror */
+  .mirror { background:var(--blue); color:#fff; border-radius:14px; padding:18px 20px; }
+  .mirror .who { font-size:9.5px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#bcd0ff; }
+  .mirror h3 { font-size:15px; font-weight:800; margin:5px 0 7px; }
+  .mirror p { font-size:12.5px; color:#dce4ff; line-height:1.55; }
+  .mirror .cf2 { display:inline-block; margin-top:9px; font-size:9.5px; font-weight:700; background:rgba(255,255,255,.16); border-radius:20px; padding:3px 10px; }
+
+  /* Footer */
+  footer { padding:22px 40px 34px; }
+  @media(max-width:560px){ footer{ padding:20px 22px 30px; } }
+  footer .m { font-size:10.5px; color:var(--muted); line-height:1.6; }
+  footer .m b { color:var(--ink-soft); }
+  footer .rule { height:2px; background:var(--ink); margin-bottom:16px; }
+</style>
+</head>
+<body>
+<div class="paper">
+
+  <!-- MASTHEAD -->
+  <div class="masthead">
+    <div class="kicker">LittleBig Connection · Design &amp; Talent Watch</div>
+    <div class="title">The <span>Signal</span></div>
+    <div class="dek">The 5-minute weekly brief on design, AI and the talent-marketplace race — what actually moved, and why it matters.</div>
+    <div class="meta" id="meta-row"></div>
+  </div>
+
+  <nav>
+    <label for="archive-select">Issue:</label>
+    <select id="archive-select"></select>
+  </nav>
+  <div id="archive-banner" class="archive-banner hidden">
+    <span>You're viewing the archived issue from <strong id="archive-banner-date"></strong>.</span>
+    <button id="back-to-current-btn" type="button">Back to current</button>
+  </div>
+
+  <div id="issue-root"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="rule"></div>
+    <div class="m">
+      <b>How this is built.</b> Synthesised weekly from two internal watch sources — the freelance-marketplace Competitive Watch (24 entities, refreshed Mondays) and AI News for Designers. Every claim carries a confidence % and a primary source: official releases and investor relations, Business Wire, ASX/SEC filings, recognised trade press, and vendor blogs. Unconfirmed items are flagged rather than dropped, so you can weigh them yourself.<br><br>
+      <b>Confidence key.</b> 90–95% = officially confirmed · 80–89% = strong reporting · below 80% = single-source or company-claimed. &nbsp;·&nbsp; <b>Next issue:</b> Monday. &nbsp;·&nbsp; The Signal — a LittleBig Connection weekly brief.
+    </div>
+  </footer>
+
+</div>
+
+<script type="application/json" id="issues-json">
+[
+  {
+    "date": "2026-07-13",
+    "label": "Jul 13, 2026 (current)",
+    "readMins": 4,
+    "entityCount": 24,
+    "tldr": [
+      "<strong>The MSPs go agentic.</strong> Magnit put a conversational AI (<strong>Pulse</strong>) straight into Microsoft Teams and was crowned a 2026 VMS leader across every region — the single most LBC-relevant move this week.",
+      "<strong>AI-native talent is printing money.</strong> Mercor is in talks for a <strong>~$20B</strong> valuation on a <strong>$2B</strong> revenue run-rate; Remote.com crossed <strong>$300M ARR</strong> and turned cash-flow positive — largely by using AI instead of hiring.",
+      "<strong>Your design tools became agents.</strong> Adobe's Firefly agent now lives inside ChatGPT, Claude and Slack, and Canva Grow 2.0 writes, launches and optimises ads end-to-end — the handoff to design is quietly disappearing."
+    ],
+    "stats": [
+      { "who": "Mercor", "big": "$20", "unit": "B", "lbl": "Valuation now in fundraising talks (term sheet received)", "cf": "85% confidence · TechCrunch", "up": false },
+      { "who": "Remote.com", "big": "$300", "unit": "M", "lbl": "ARR reached, now cash-flow positive", "cf": "85% confidence · TechCrunch", "up": true },
+      { "who": "Fiverr", "big": "$105.5", "unit": "M", "lbl": "Q1 revenue, above expectations — stock +16.8%", "cf": "95% confidence · Fiverr IR", "up": false },
+      { "who": "Freelancer.com", "big": "+14", "unit": "%", "lbl": "GMV YoY (AUD 263.3M); Escrow at record profit", "cf": "85% confidence · ASX filing", "up": true },
+      { "who": "Remote.com", "big": "+50", "unit": "%", "lbl": "Revenue per employee via AI — zero new headcount", "cf": "85% confidence · TechCrunch", "up": true },
+      { "who": "Magnit", "big": "3", "unit": "/3", "lbl": "Regions where it's a 2026 VMS PEAK Matrix Leader", "cf": "90% confidence · Business Wire", "up": false }
+    ],
+    "momentum": { "label": "Mercor revenue run-rate — doubled in four months", "sub": "company-claimed · 70%", "pct": 42, "capA": "Feb 2026 · $1B", "capB": "Jun 2026 · $2B" },
+    "raceTail": "7 of 24 tracked moved",
+    "moves": [
+      { "name": "Magnit", "cat": "VMS / MSP", "cfPct": "90%", "cfClass": "cf-hi", "text": "Launched <b>Magnit Pulse</b> (Jun 23) — conversational AI inside Teams for requisitions, timecard and expense approvals, extensions and onboarding — plus a <b>Gateway</b> supplier-intelligence platform. Also named an <b>Everest 2026 VMS PEAK Matrix Leader</b> across global, NA and EMEA. The clearest picture of where contingent-workforce tooling is heading." },
+      { "name": "Mercor &amp; Turing", "cat": "AI-native talent", "cfPct": "70–85%", "cfClass": "cf-mid", "text": "<b>Mercor</b> is negotiating ~$500M at a ~$20B valuation, claims a $2B run-rate and bought AI-agent-training firm Deeptune. <b>Turing</b> launched <b>Turing Frontier</b>, connecting AI labs with elite domain experts — pushing beyond dev staffing into expert-network territory." },
+      { "name": "Remote.com", "cat": "EOR / AOR", "cfPct": "85%", "cfClass": "cf-hi", "text": "Passed <b>$300M ARR</b> and turned cash-flow positive, crediting AI for a <b>~50% lift in revenue per employee</b> with no added headcount — a live proof point that AI can bend a marketplace's unit economics." },
+      { "name": "Fiverr &amp; Freelancer.com", "cat": "Public marketplaces", "cfPct": "85–95%", "cfClass": "cf-hi", "text": "<b>Fiverr</b> posted Q1 revenue of $105.5M (stock +16.8% pre-market) and opened an <b>AI Video Hub</b>. <b>Freelancer.com</b> named a new CFO (Dylan Carter), grew GMV +14% YoY and hit record Escrow.com profitability — even as group revenue slipped 9.4%." }
+    ],
+    "quiet": "<b>Quiet week for the other 17</b> — including Malt, Upwork, Toptal, Comet, LeHibou and Deel. Discovery found no new entrants worth adding; Deel's \"July product update\" turned out to be recycled April 2025 content.",
+    "craft": [
+      { "b": "Figma", "text": "parallel AI image edits: fire several generations at once and keep designing while they load. Follows Config 2026's Code Layers, Shaders and upgraded Agent.", "s": "87% · Figma release notes" },
+      { "b": "Adobe Firefly", "text": "its creative agent now runs inside ChatGPT, Claude, Copilot, Gemini and Slack, with reusable Elements and Projects.", "s": "93% · Adobe Newsroom" },
+      { "b": "Canva Grow 2.0", "text": "brief → ad → launch → optimise, all in one flow (marketing may stop needing a design handoff).", "s": "92% · Canva Newsroom" },
+      { "b": "Midjourney V8.1", "text": "now the default, roughly 4–5× faster for moodboards and rapid exploration.", "s": "88% · Midjourney" },
+      { "b": "Worth learning", "text": "OpenAI Academy's new \"AI at work\" courses and Anthropic's 5 free AI Fluency courses on Coursera.", "s": "85–90% · vendor sources" }
+    ],
+    "bigPicture": [
+      { "b": "Google Gemini 3.5", "text": "Flash is the new default in the Gemini app and Search; Pro (2M-token context) expected around Jul 17.", "s": "92%" },
+      { "b": "EU AI Act", "text": "the simplification package pushes high-risk compliance deadlines out to <b>2027–2028</b>, easing near-term pressure.", "s": "90%" },
+      { "b": "Chip watch", "text": "Qualcomm reportedly in talks to buy AI chipmaker Tenstorrent for up to $10B. Treat as unconfirmed.", "s": "80% · flagged uncertain" }
+    ],
+    "mirror": {
+      "who": "Self-check · same OSINT method, turned on us",
+      "title": "Our public changelog reads as 9+ months stale",
+      "text": "To an outside observer, LBC's Help Center \"Product Updates\" still shows Q3 2025 as its latest release section — while Deel publishes monthly. On the upside, two fresh blog posts landed Jul 2 (\"enterprises access just 1% of the skills market\" and \"the buyer of the future is a freelancer\"). Easy, high-leverage fix.",
+      "cf": "85% confidence · LBC Help Center &amp; Blog, checked directly"
+    }
+  }
+]
+</script>
+
+<script>
+(function () {
+  var MAX_WEEKS = 8;
+  var issues = JSON.parse(document.getElementById('issues-json').textContent);
+
+  function esc(s){ return s; } // content pre-sanitized in JSON (internal source, no user input)
+
+  function metaHtml(issue, isCurrent) {
+    return '<span class="chip read">≈ ' + issue.readMins + ' min read</span>' +
+      '<span class="chip">Week of ' + issue.date.replace(/(\d{4})-(\d{2})-(\d{2})/, function(m,y,mo,d){
+        var months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return months[parseInt(mo,10)-1] + ' ' + parseInt(d,10) + ', ' + y;
+      }) + '</span>' +
+      '<span class="chip">' + issue.entityCount + ' competitors tracked</span>' +
+      '<span class="chip">Primary sources · confidence rated</span>';
+  }
+
+  function statHtml(s) {
+    return '<div class="stat' + (s.up ? ' up' : '') + '">' +
+      '<div class="who">' + s.who + '</div>' +
+      '<div class="big">' + s.big + '<em>' + s.unit + '</em></div>' +
+      '<div class="lbl">' + s.lbl + '</div>' +
+      '<div class="cf">● ' + s.cf + '</div></div>';
+  }
+
+  function moveHtml(m) {
+    return '<div class="move"><div class="h"><span class="name">' + m.name + '</span>' +
+      '<span class="cat">' + m.cat + '</span>' +
+      '<span class="cf-pill ' + m.cfClass + '">' + m.cfPct + '</span></div>' +
+      '<p>' + m.text + '</p></div>';
+  }
+
+  function craftHtml(c) {
+    return '<div class="li"><b>' + c.b + '</b> — ' + c.text + ' <span class="s">' + c.s + '</span></div>';
+  }
+
+  function issueHtml(issue) {
+    var tldrHtml = issue.tldr.map(function(t, i) {
+      return '<div class="tl"><div class="b">' + (i+1) + '</div><p>' + t + '</p></div>';
+    }).join('');
+
+    return ''
+      + '<section><div class="eyebrow"><span class="num">01</span><h2>The week in one glance</h2></div>'
+      + '<div class="tldr">' + tldrHtml + '</div></section>'
+
+      + '<section><div class="eyebrow"><span class="num">02</span><h2>By the numbers</h2><span class="tail">competitor signals, this week</span></div>'
+      + '<div class="stats">' + issue.stats.map(statHtml).join('') + '</div>'
+      + '<div class="bars"><div class="bar-row">'
+      + '<div class="cap"><b>' + issue.momentum.label + '</b><span>' + issue.momentum.sub + '</span></div>'
+      + '<div class="track"><div class="fill a" style="width:' + issue.momentum.pct + '%"></div></div>'
+      + '<div class="cap" style="margin-top:4px"><span>' + issue.momentum.capA + '</span><span>' + issue.momentum.capB + '</span></div>'
+      + '</div></div></section>'
+
+      + '<section><div class="eyebrow"><span class="num">03</span><h2>The competitive race</h2><span class="tail">' + issue.raceTail + '</span></div>'
+      + issue.moves.map(moveHtml).join('')
+      + '<div class="quiet">' + issue.quiet + '</div></section>'
+
+      + '<section><div class="eyebrow"><span class="num">04</span><h2>For your craft</h2><span class="tail">design &amp; AI tools</span></div>'
+      + '<div class="list">' + issue.craft.map(craftHtml).join('') + '</div></section>'
+
+      + '<section><div class="eyebrow"><span class="num">05</span><h2>Big picture</h2><span class="tail">industry context</span></div>'
+      + '<div class="list">' + issue.bigPicture.map(craftHtml).join('') + '</div></section>'
+
+      + '<section><div class="eyebrow"><span class="num">06</span><h2>The mirror</h2><span class="tail">how LBC looks from outside</span></div>'
+      + '<div class="mirror"><div class="who">' + issue.mirror.who + '</div>'
+      + '<h3>' + issue.mirror.title + '</h3><p>' + issue.mirror.text + '</p>'
+      + '<span class="cf2">● ' + issue.mirror.cf + '</span></div></section>';
+  }
+
+  function renderIssue(idx, isCurrent) {
+    var issue = issues[idx];
+    document.getElementById('issue-root').innerHTML = issueHtml(issue);
+    document.getElementById('meta-row').innerHTML = metaHtml(issue, isCurrent);
+    if (isCurrent) {
+      document.getElementById('archive-banner').classList.add('hidden');
+    } else {
+      document.getElementById('archive-banner-date').textContent = issue.label.replace(' (current)', '');
+      document.getElementById('archive-banner').classList.remove('hidden');
+    }
+  }
+
+  function buildSelect() {
+    var select = document.getElementById('archive-select');
+    select.innerHTML = issues.slice(0, MAX_WEEKS).map(function (entry, i) {
+      return '<option value="' + i + '">' + entry.label + '</option>';
+    }).join('');
+    select.addEventListener('change', function () {
+      var idx = parseInt(this.value, 10);
+      renderIssue(idx, idx === 0);
+    });
+  }
+
+  document.getElementById('back-to-current-btn').addEventListener('click', function () {
+    document.getElementById('archive-select').value = '0';
+    renderIssue(0, true);
+  });
+
+  buildSelect();
+  renderIssue(0, true);
+})();
+</script>
+
+</body>
+</html>
