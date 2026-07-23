@@ -107,9 +107,24 @@
   .cf-hi{ background:var(--green); } .cf-mid{ background:var(--blue-2); } .cf-lo{ background:var(--amber); }
   .move p { font-size:13px; color:var(--ink-soft); }
   .move p b { color:var(--ink); font-weight:700; }
+  .move-links { margin-top:9px; display:flex; gap:16px; flex-wrap:wrap; }
+  .move-link { font-size:11.5px; font-weight:700; color:var(--blue-2); text-decoration:none;
+               border-bottom:1px solid var(--blue-tint,#cddafd); padding-bottom:1px; white-space:nowrap; }
+  .move-link:hover { border-bottom-color:var(--blue-2); }
 
   .quiet { font-size:12px; color:var(--muted); background:var(--line-soft); border-radius:10px; padding:11px 14px; margin-top:14px; line-height:1.5; }
   .quiet b { color:var(--ink-soft); }
+
+  /* CTA pill — LBC brand: solid rounded pill, white bold text */
+  .cta-row { margin-top:18px; display:flex; }
+  .cta-pill {
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--blue); color:#fff; font-weight:700; font-size:13px;
+    padding:12px 22px; border-radius:999px; text-decoration:none; white-space:nowrap;
+  }
+  .cta-pill:hover { background:var(--blue-2); }
+  .cta-pill .arrow { font-size:14px; line-height:1; }
+  @media(max-width:560px){ .cta-row{ width:100%; } .cta-pill{ width:100%; justify-content:center; } }
 
   /* Two-col compact lists */
   .list { display:grid; gap:9px; }
@@ -189,10 +204,10 @@
     "momentum": { "label": "Mercor revenue run-rate — doubled in four months", "sub": "company-claimed · 70%", "pct": 42, "capA": "Feb 2026 · $1B", "capB": "Jun 2026 · $2B" },
     "raceTail": "7 of 24 tracked moved",
     "moves": [
-      { "name": "Magnit", "cat": "VMS / MSP", "cfPct": "90%", "cfClass": "cf-hi", "text": "Launched <b>Magnit Pulse</b> (Jun 23) — conversational AI inside Teams for requisitions, timecard and expense approvals, extensions and onboarding — plus a <b>Gateway</b> supplier-intelligence platform. Also named an <b>Everest 2026 VMS PEAK Matrix Leader</b> across global, NA and EMEA. The clearest picture of where contingent-workforce tooling is heading." },
-      { "name": "Mercor &amp; Turing", "cat": "AI-native talent", "cfPct": "70–85%", "cfClass": "cf-mid", "text": "<b>Mercor</b> is negotiating ~$500M at a ~$20B valuation, claims a $2B run-rate and bought AI-agent-training firm Deeptune. <b>Turing</b> launched <b>Turing Frontier</b>, connecting AI labs with elite domain experts — pushing beyond dev staffing into expert-network territory." },
-      { "name": "Remote.com", "cat": "EOR / AOR", "cfPct": "85%", "cfClass": "cf-hi", "text": "Passed <b>$300M ARR</b> and turned cash-flow positive, crediting AI for a <b>~50% lift in revenue per employee</b> with no added headcount — a live proof point that AI can bend a marketplace's unit economics." },
-      { "name": "Fiverr &amp; Freelancer.com", "cat": "Public marketplaces", "cfPct": "85–95%", "cfClass": "cf-hi", "text": "<b>Fiverr</b> posted Q1 revenue of $105.5M (stock +16.8% pre-market) and opened an <b>AI Video Hub</b>. <b>Freelancer.com</b> named a new CFO (Dylan Carter), grew GMV +14% YoY and hit record Escrow.com profitability — even as group revenue slipped 9.4%." }
+      { "name": "Magnit", "cat": "VMS / MSP", "cfPct": "90%", "cfClass": "cf-hi", "text": "Launched <b>Magnit Pulse</b> (Jun 23) — conversational AI inside Teams for requisitions, timecard and expense approvals, extensions and onboarding — plus a <b>Gateway</b> supplier-intelligence platform. Also named an <b>Everest 2026 VMS PEAK Matrix Leader</b> across global, NA and EMEA. The clearest picture of where contingent-workforce tooling is heading.", "links": [ { "label": "Magnit", "id": "magnit" } ] },
+      { "name": "Mercor &amp; Turing", "cat": "AI-native talent", "cfPct": "70–85%", "cfClass": "cf-mid", "text": "<b>Mercor</b> is negotiating ~$500M at a ~$20B valuation, claims a $2B run-rate and bought AI-agent-training firm Deeptune. <b>Turing</b> launched <b>Turing Frontier</b>, connecting AI labs with elite domain experts — pushing beyond dev staffing into expert-network territory.", "links": [ { "label": "Mercor", "id": "mercor" }, { "label": "Turing", "id": "turing" } ] },
+      { "name": "Remote.com", "cat": "EOR / AOR", "cfPct": "85%", "cfClass": "cf-hi", "text": "Passed <b>$300M ARR</b> and turned cash-flow positive, crediting AI for a <b>~50% lift in revenue per employee</b> with no added headcount — a live proof point that AI can bend a marketplace's unit economics.", "links": [ { "label": "Remote.com", "id": "remote" } ] },
+      { "name": "Fiverr &amp; Freelancer.com", "cat": "Public marketplaces", "cfPct": "85–95%", "cfClass": "cf-hi", "text": "<b>Fiverr</b> posted Q1 revenue of $105.5M (stock +16.8% pre-market) and opened an <b>AI Video Hub</b>. <b>Freelancer.com</b> named a new CFO (Dylan Carter), grew GMV +14% YoY and hit record Escrow.com profitability — even as group revenue slipped 9.4%.", "links": [ { "label": "Fiverr", "id": "fiverr" }, { "label": "Freelancer.com", "id": "freelancercom" } ] }
     ],
     "quiet": "<b>Quiet week for the other 17</b> — including Malt, Upwork, Toptal, Comet, LeHibou and Deel. Discovery found no new entrants worth adding; Deel's \"July product update\" turned out to be recycled April 2025 content.",
     "craft": [
@@ -220,6 +235,7 @@
 <script>
 (function () {
   var MAX_WEEKS = 8;
+  var WATCH_BASE = 'https://tsarkazaxov.github.io/littlebig-competitive-watch/';
   var issues = JSON.parse(document.getElementById('issues-json').textContent);
 
   function esc(s){ return s; } // content pre-sanitized in JSON (internal source, no user input)
@@ -243,10 +259,16 @@
   }
 
   function moveHtml(m) {
+    var linksHtml = '';
+    if (m.links && m.links.length) {
+      linksHtml = '<div class="move-links">' + m.links.map(function(l) {
+        return '<a class="move-link" href="' + WATCH_BASE + '#/company/' + l.id + '" target="_blank" rel="noopener">Fiche ' + l.label + ' →</a>';
+      }).join('') + '</div>';
+    }
     return '<div class="move"><div class="h"><span class="name">' + m.name + '</span>' +
       '<span class="cat">' + m.cat + '</span>' +
       '<span class="cf-pill ' + m.cfClass + '">' + m.cfPct + '</span></div>' +
-      '<p>' + m.text + '</p></div>';
+      '<p>' + m.text + '</p>' + linksHtml + '</div>';
   }
 
   function craftHtml(c) {
@@ -272,7 +294,9 @@
 
       + '<section><div class="eyebrow"><span class="num">03</span><h2>The competitive race</h2><span class="tail">' + issue.raceTail + '</span></div>'
       + issue.moves.map(moveHtml).join('')
-      + '<div class="quiet">' + issue.quiet + '</div></section>'
+      + '<div class="quiet">' + issue.quiet + '</div>'
+      + '<div class="cta-row"><a class="cta-pill" href="' + WATCH_BASE + '" target="_blank" rel="noopener">Voir l\'analyse complète des ' + issue.entityCount + ' concurrents <span class="arrow">→</span></a></div>'
+      + '</section>'
 
       + '<section><div class="eyebrow"><span class="num">04</span><h2>For your craft</h2><span class="tail">design &amp; AI tools</span></div>'
       + '<div class="list">' + issue.craft.map(craftHtml).join('') + '</div></section>'
