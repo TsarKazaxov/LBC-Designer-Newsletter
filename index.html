@@ -2,7 +2,7 @@
 {
   "name": "Newsletter for the Designers of Future",
   "schemaVersion": 1,
-  "description": "Weekly synthesis newsletter for the LBC Designers team. Compresses two upstream Monday tasks — the AI News for Designers digest and the Freelance Marketplaces competitive watch — into one scannable, sub-5-minute issue. Synthesis only: no independent research; confidence % and sources carried through from the upstream sources. Includes a rolling 8-issue archive and deep-link buttons to the two upstream artifact pages."
+  "description": "Weekly synthesis newsletter for the LBC Designers team, restyled to the LittleBig Connection design system (tokens, Badge/Button/Tag/Tabs component styles) per the Claude Design iteration 'Newsletter.dc.html'. Compresses two upstream Monday tasks — AI News for Designers and the Freelance Marketplaces competitive watch — into one scannable, sub-5-minute issue. Synthesis only: confidence % and sources carried through from upstream. Rolling 8-issue archive."
 }
 </script>
 <html lang="en">
@@ -13,342 +13,306 @@
 <style>
   :root {
     color-scheme: light;
-    --blue-primary: #0E2AE7;
-    --blue-medium: #4678FE;
-    --blue-tint: #C4E2FE;
-    --green: #02B86F;
-    --slate: #4D557E;
-    --card-gray: #ECEEF2;
-    --blob-blue: #EEF2FF;
-    --text-dark: #0D1B3E;
-    --text-body: #1C2035;
-    --text-muted: #6B7280;
-    --divider: #E0E4F0;
-    --orange: #F77F00;
-    --white: #FFFFFF;
+
+    /* ---- LBC design system tokens (from littlebig-connection-design-system-mater-*) ---- */
+    --lbc-primary: #0e2be7;
+    --lbc-primary-hover: #2c54f4;
+    --lbc-primary-active: #1681e4;
+    --lbc-primary-light: #e1f1ff;
+    --lbc-primary-lighter: #f4f6fe;
+
+    --lbc-gray-1: #1c2036;
+    --lbc-gray-2: #3a3f54;
+    --lbc-gray-3: #5a5f72;
+    --lbc-gray-4: #8c90a0;
+    --lbc-gray-5: #c5c8d2;
+    --lbc-gray-6: #e8eaf0;
+    --lbc-gray-7: #f8f8f9;
+    --lbc-white: #ffffff;
+
+    --lbc-success: #00a000;
+    --lbc-success-bg: #e6f5e6;
+    --lbc-error: #ff0000;
+    --lbc-error-bg: #ffe6e6;
+    --lbc-warning: #f48116;
+    --lbc-warning-bg: #fdeede;
+    --lbc-warning-fg: #9a5200;
+    --lbc-info: #0747a6;
+    --lbc-info-bg: #e1ecf9;
+    --lbc-ai: #8a3dff;
+    --lbc-ai-bg: #f1e7ff;
+
+    --lbc-bg-app: #eff5fa;
+
+    --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    --fs-display: 40px;
+    --fs-h3: 22px;
+    --fs-body-lg: 17px;
+    --fs-body: 15px;
+    --fs-body-sm: 14px;
+    --fs-caption: 13px;
+    --fs-micro: 12px;
+
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-pill: 999px;
+
+    --shadow-focus: 0 0 0 3px rgba(14, 43, 231, 0.18);
+    --dur-fast: 120ms;
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'Poppins', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
-    background: var(--white);
-    color: var(--text-body);
+    font-family: var(--font-sans);
+    background: var(--lbc-white);
+    color: var(--lbc-gray-1);
     -webkit-font-smoothing: antialiased;
   }
 
-  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px 48px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 32px 12px; }
+  @media (max-width: 640px) { .wrap { padding: 0 16px 12px; } }
   .hidden { display: none !important; }
 
-  /* Header */
-  header {
-    background: var(--blue-primary);
-    color: var(--white);
-    padding: 30px 24px 36px;
-    position: relative;
-    overflow: hidden;
-  }
-  header .blob {
-    position: absolute;
-    top: -60px; right: -40px;
-    width: 200px; height: 200px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 36px;
-    transform: rotate(18deg);
-  }
-  header .blob2 {
-    position: absolute;
-    bottom: -80px; left: -30px;
-    width: 160px; height: 160px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 30px;
-    transform: rotate(-12deg);
-  }
-  .header-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
-  .logo {
-    font-size: 12px; font-weight: 700; letter-spacing: 0.3px;
-    opacity: 0.85; margin-bottom: 14px;
-  }
-  h1 { font-size: 27px; font-weight: 700; line-height: 1.22; margin-bottom: 8px; }
-  .subtitle { font-size: 13.5px; opacity: 0.9; max-width: 620px; line-height: 1.5; }
-  .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  svg.icon { width: 1em; height: 1em; flex: none; }
+
+  /* ---- Header ---- */
+  header { position: relative; overflow: hidden; background: var(--lbc-primary); }
+  header .blob1 { position: absolute; top: -70px; right: -50px; width: 220px; height: 220px; background: rgba(255,255,255,0.08); border-radius: 50%; }
+  header .blob2 { position: absolute; bottom: -90px; left: -40px; width: 180px; height: 180px; background: rgba(255,255,255,0.06); border-radius: 50%; }
+  .header-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; padding: 40px 32px 40px; }
+  @media (max-width: 900px) { .header-inner { padding: 32px 24px 34px; } }
+  @media (max-width: 640px) { .header-inner { padding: 28px 16px 30px; } }
+
+  .eyebrow { font: 600 var(--fs-micro)/1 var(--font-sans); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.75); margin-top: 16px; }
+  h1 { font: 700 40px/1.15 var(--font-sans); color: #fff; margin: 10px 0 10px; letter-spacing: -0.02em; }
+  @media (max-width: 900px) { h1 { font-size: 32px; line-height: 1.18; } }
+  @media (max-width: 640px) { h1 { font-size: 26px; line-height: 1.2; } }
+  .subtitle { font: 400 var(--fs-body)/1.6 var(--font-sans); color: rgba(255,255,255,0.88); max-width: 620px; margin: 0; }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; align-items: center; }
   .meta-chip {
-    background: rgba(255,255,255,0.14);
-    border: 1px solid rgba(255,255,255,0.25);
-    border-radius: 20px;
-    padding: 5px 12px;
-    font-size: 11.5px;
-    font-weight: 600;
-  }
-
-  /* Nav + archive control */
-  nav {
-    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
-    padding: 18px 0 6px;
-    position: sticky; top: 0;
-    background: var(--white);
-    z-index: 5;
-    border-bottom: 1px solid var(--divider);
-    margin-bottom: 22px;
-  }
-  nav a {
-    text-decoration: none;
-    color: var(--text-dark);
-    background: var(--white);
-    border: 1px solid var(--divider);
-    border-radius: 20px;
-    padding: 7px 14px;
-    font-size: 12.5px;
-    font-weight: 600;
-    transition: background 0.15s;
-  }
-  nav a:hover { background: var(--blob-blue); }
-  .archive-control { margin-left: auto; display: flex; align-items: center; gap: 8px; }
-  .archive-control label { font-size: 11.5px; font-weight: 700; color: var(--slate); }
-  .archive-control select {
-    font-family: inherit;
-    font-size: 12.5px; font-weight: 600; color: var(--text-dark);
-    border: 1px solid var(--divider);
-    border-radius: 20px;
-    padding: 6px 10px;
-    background: var(--white);
-  }
-  .archive-banner {
-    background: var(--blob-blue);
-    border: 1px solid var(--blue-tint);
-    border-radius: 12px;
-    padding: 10px 16px;
-    font-size: 12.5px;
-    color: var(--text-dark);
-    margin-bottom: 24px;
-    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-  }
-  .archive-banner button {
-    font-family: inherit;
-    font-size: 12px; font-weight: 700; color: var(--white);
-    background: var(--blue-medium);
-    border: none; border-radius: 16px;
-    padding: 6px 12px; cursor: pointer;
-  }
-
-  .dek {
-    font-size: 13.5px; color: var(--text-body); line-height: 1.6;
-    margin: 4px 0 4px; max-width: 660px;
-  }
-
-  /* Stat callouts */
-  .stats {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
-    margin: 22px 0 40px;
-  }
-  .stat {
-    background: var(--blob-blue);
-    border: 1px solid var(--blue-tint);
-    border-radius: 16px;
-    padding: 20px 18px;
-    text-align: left;
-  }
-  .stat .num {
-    font-size: 40px; font-weight: 700; color: var(--blue-primary);
-    line-height: 1; margin-bottom: 8px;
-  }
-  .stat .lbl {
-    font-size: 12px; font-weight: 600; color: var(--slate); line-height: 1.4;
-  }
-  @media (max-width: 640px) {
-    .stats { grid-template-columns: 1fr; }
-    .stat { text-align: left; }
-    .archive-control { margin-left: 0; width: 100%; }
-  }
-
-  /* Sections */
-  section { margin-bottom: 12px; scroll-margin-top: 70px; }
-  .section-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
-  .section-tag {
-    font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px;
-    color: var(--blue-medium); text-transform: uppercase;
-  }
-  .section-tag.slate { color: var(--slate); }
-  h2 { font-size: 20px; font-weight: 700; color: var(--text-dark); }
-  h3.archive-h { font-size: 15px; font-weight: 700; color: var(--text-dark); margin: 26px 0 10px; }
-  .section-note {
-    font-size: 12.5px; color: var(--text-muted); margin: 6px 0 18px; line-height: 1.5; max-width: 660px;
-  }
-
-  /* Cards */
-  .card {
-    background: var(--card-gray);
-    border-radius: 14px;
-    padding: 18px 20px;
-    margin-bottom: 12px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-  }
-  .rank {
-    flex: 0 0 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--blue-primary);
-    color: var(--white);
-    font-size: 13px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-    margin-top: 2px;
-  }
-  .card-body { flex: 1; min-width: 0; }
-  .kicker {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase;
-    color: var(--blue-medium); margin-bottom: 5px;
-  }
-  .card-title {
-    font-size: 14.5px; font-weight: 700; color: var(--text-dark);
-    margin-bottom: 5px; line-height: 1.35;
-  }
-  .card-summary {
-    font-size: 13px; color: var(--text-body); line-height: 1.55; margin-bottom: 10px;
-  }
-  .card-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .source-link {
-    font-size: 11.5px; font-weight: 600; color: var(--blue-medium);
-    text-decoration: none; border-bottom: 1px solid transparent;
-  }
-  .source-link:hover { border-bottom-color: var(--blue-medium); }
-  .dot { color: var(--divider); font-size: 11px; }
-  .date { font-size: 11.5px; color: var(--text-muted); }
-  .confidence {
-    font-size: 10.5px; font-weight: 700;
-    border-radius: 12px; padding: 3px 9px;
-    color: var(--white);
-    margin-left: auto;
-    white-space: nowrap;
-  }
-  .conf-high { background: var(--green); }
-  .conf-mid { background: var(--blue-medium); }
-  .conf-low { background: var(--orange); }
-
-  .notice {
-    background: var(--blob-blue);
-    border: 1px solid var(--blue-tint);
-    border-left: 4px solid var(--slate);
-    border-radius: 12px;
-    padding: 16px 18px;
-    font-size: 13px; color: var(--text-body); line-height: 1.6;
-    margin-bottom: 12px;
-  }
-  .notice strong { color: var(--text-dark); }
-
-  /* Deep-link "more" button, one per section */
-  .more-link {
     display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; font-weight: 700; color: var(--blue-primary);
-    background: var(--blob-blue);
-    border: 1px solid var(--blue-tint);
-    border-radius: 20px;
-    padding: 8px 14px;
-    text-decoration: none;
-    margin: 4px 0 28px;
+    height: 26px; padding: 0 12px;
+    border-radius: var(--radius-pill);
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.26);
+    font: 600 var(--fs-micro)/1 var(--font-sans);
+    color: #fff; white-space: nowrap;
   }
-  .more-link:hover { background: var(--blue-tint); }
-  .more-link .arrow { transition: transform 0.15s; }
-  .more-link:hover .arrow { transform: translateX(2px); }
+  .meta-chip svg.icon { font-size: 15px; }
+  .viewing-chip { position: relative; padding: 0 6px 0 12px; }
+  .viewing-chip select {
+    appearance: none; -webkit-appearance: none; -moz-appearance: none;
+    border: none; background: transparent;
+    font: 600 var(--fs-micro)/1 var(--font-sans);
+    color: #fff; padding: 0 16px 0 4px; cursor: pointer; max-width: 160px;
+  }
+  .viewing-chip select:focus { outline: none; }
+  .viewing-chip select option { color: var(--lbc-gray-1); }
+  .viewing-chip .chev { position: absolute; right: 6px; font-size: 15px; color: rgba(255,255,255,0.8); pointer-events: none; }
 
-  /* Footer / methodology */
-  footer {
-    border-top: 1px solid var(--divider);
-    padding-top: 20px;
-    font-size: 12px;
-    color: var(--text-muted);
-    line-height: 1.6;
+  /* ---- Sticky nav / tabs ---- */
+  nav.jump { position: sticky; top: 0; background: var(--lbc-white); z-index: 5; padding: 12px 0 0; }
+  .jump-label { font: 600 10.5px/1 var(--font-sans); letter-spacing: 0.08em; text-transform: uppercase; color: var(--lbc-gray-4); margin-bottom: 8px; }
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--lbc-gray-6); }
+  .tab-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 12px 16px; border: none; background: transparent; cursor: pointer;
+    font: 600 var(--fs-body)/1 var(--font-sans);
+    color: var(--lbc-gray-3);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color var(--dur-fast);
   }
-  footer strong { color: var(--text-dark); }
-  footer a { color: var(--blue-medium); font-weight: 600; text-decoration: none; }
-  footer a:hover { text-decoration: underline; }
+  .tab-btn.active { color: var(--lbc-primary); border-bottom-color: var(--lbc-primary); }
+
+  /* ---- Archive banner ---- */
+  .archive-banner {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    background: var(--lbc-primary-lighter);
+    border: 1px solid var(--lbc-primary-light);
+    border-radius: var(--radius-lg);
+    padding: 12px 16px; margin: 20px 0;
+    font-size: var(--fs-caption); color: var(--lbc-gray-1);
+  }
+  .archive-banner strong { font-weight: 600; }
+  .btn-tonal-sm {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    height: 32px; padding: 0 14px; border: none; border-radius: var(--radius-md);
+    background: var(--lbc-primary-light); color: var(--lbc-primary);
+    font: 600 var(--fs-body-sm)/1 var(--font-sans); cursor: pointer;
+    transition: background var(--dur-fast);
+  }
+  .btn-tonal-sm:hover { background: #d3e6ff; }
+
+  /* ---- Dek ---- */
+  .dek { font: 400 var(--fs-body)/1.6 var(--font-sans); color: var(--lbc-gray-2); margin: 20px 0 4px; max-width: 660px; }
+
+  /* ---- Stat cards ---- */
+  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 22px 0 36px; }
+  @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stat-card { background: var(--lbc-primary-lighter); border: 1px solid var(--lbc-primary-light); border-radius: var(--radius-lg); padding: 18px; }
+  .stat-card .num { font: 700 34px/1 var(--font-sans); color: var(--lbc-primary); margin-bottom: 6px; }
+  .stat-card .lbl { font: 600 var(--fs-micro)/1.4 var(--font-sans); color: var(--lbc-gray-3); }
+
+  /* ---- Sections ---- */
+  section { scroll-margin-top: 76px; margin-bottom: 40px; }
+  .section-eyebrow { font: 700 var(--fs-micro)/1 var(--font-sans); letter-spacing: 0.1em; text-transform: uppercase; color: var(--lbc-primary); }
+  h2 { font: 600 var(--fs-h3)/1.25 var(--font-sans); color: var(--lbc-gray-1); margin: 0 0 6px; }
+  .section-note { font: 400 var(--fs-caption)/1.55 var(--font-sans); color: var(--lbc-gray-3); max-width: 640px; margin: 0 0 18px; }
+
+  /* ---- Badges ---- */
+  .badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    height: 22px; padding: 0 9px; border-radius: var(--radius-pill);
+    font: 600 var(--fs-micro)/1 var(--font-sans); letter-spacing: 0.01em; white-space: nowrap;
+  }
+  .badge-solid-primary { background: var(--lbc-primary); color: #fff; width: 28px; height: 28px; padding: 0; justify-content: center; border-radius: 50%; flex: none; margin-top: 2px; }
+  .badge-soft-info { background: var(--lbc-info-bg); color: var(--lbc-info); }
+  .badge-soft-ai { background: var(--lbc-ai-bg); color: var(--lbc-ai); }
+  .badge-soft-neutral { background: var(--lbc-gray-6); color: var(--lbc-gray-2); }
+  .badge-soft-success { background: var(--lbc-success-bg); color: var(--lbc-success); }
+  .badge-soft-warning { background: var(--lbc-warning-bg); color: var(--lbc-warning-fg); }
+
+  /* ---- Cards grid ---- */
+  .cards-grid { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
+  @media (min-width: 700px) { .cards-grid.two-col { grid-template-columns: 1fr 1fr; } }
+
+  .ai-card {
+    display: flex; gap: 14px; align-items: flex-start;
+    border-radius: var(--radius-xl); padding: 16px;
+    background: var(--lbc-white); border: 1px solid var(--lbc-gray-5);
+  }
+  .ai-card .body { min-width: 0; flex: 1; }
+  .card-top-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .card-title {
+    font: 600 var(--fs-body)/1.35 var(--font-sans); color: var(--lbc-gray-1); margin-bottom: 6px;
+    min-height: 41px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .card-summary { font: 400 var(--fs-caption)/1.55 var(--font-sans); color: var(--lbc-gray-2); margin: 0 0 4px; }
+  .clamp2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .read-toggle {
+    display: inline-flex; align-items: center; gap: 3px; padding: 2px 6px; margin: 0 0 10px -6px;
+    border-radius: var(--radius-sm); font: 600 var(--fs-caption)/1 var(--font-sans); color: var(--lbc-gray-3);
+    cursor: pointer; background: none; border: none;
+  }
+  .read-toggle:hover { background: var(--lbc-gray-6); color: var(--lbc-gray-2); }
+  .card-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+  .source-link { font: 600 var(--fs-caption)/1 var(--font-sans); color: var(--lbc-primary); text-decoration: none; border-bottom: 1px solid transparent; }
+  .source-link:hover { border-bottom-color: var(--lbc-primary); }
+  .source-link:focus-visible { outline: none; box-shadow: var(--shadow-focus); border-radius: 2px; }
+  .dot-sep { color: var(--lbc-gray-5); font-size: 11px; }
+  .card-date { font: 400 var(--fs-caption)/1 var(--font-sans); color: var(--lbc-gray-4); }
+
+  /* ---- Competitive cards ---- */
+  .comp-card { display: flex; flex-direction: column; gap: 8px; background: var(--lbc-gray-7); border-radius: var(--radius-lg); padding: 20px; }
+  .comp-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .comp-name { font: 600 var(--fs-body)/1.2 var(--font-sans); color: var(--lbc-gray-1); }
+  .tag {
+    display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px;
+    border-radius: var(--radius-pill); border: 1px solid var(--lbc-gray-5); background: #fff;
+    color: var(--lbc-gray-2); font: 500 12px/1 var(--font-sans);
+  }
+
+  .notice-card {
+    display: flex; gap: 10px; align-items: center;
+    background: var(--lbc-gray-7); border-radius: var(--radius-lg); padding: 14px;
+  }
+  .notice-card svg.icon { font-size: 19px; color: var(--lbc-gray-3); }
+  .notice-card p { font: 400 var(--fs-caption)/1.5 var(--font-sans); color: var(--lbc-gray-2); margin: 0; }
+
+  .section-cta { margin-top: 20px; }
+  .btn-filled-sm {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    height: 40px; padding: 0 20px; border: none; border-radius: var(--radius-md);
+    background: var(--lbc-primary); color: #fff;
+    font: 600 var(--fs-body)/1 var(--font-sans); letter-spacing: -0.01em;
+    cursor: pointer; text-decoration: none;
+    transition: background var(--dur-fast) var(--ease-standard);
+  }
+  .btn-filled-sm:hover { background: var(--lbc-primary-hover); }
+  .btn-filled-sm:active { background: var(--lbc-primary-active); }
+
+  /* ---- Footer ---- */
+  footer { border-top: 1px solid var(--lbc-gray-6); background: var(--lbc-gray-7); }
+  .footer-inner { max-width: 900px; margin: 0 auto; padding: 28px 32px 28px; display: flex; gap: 10px; align-items: flex-start; }
+  @media (max-width: 640px) { .footer-inner { padding: 24px 16px; } }
+  footer svg.icon { font-size: 18px; color: var(--lbc-gray-4); margin-top: 2px; }
+  footer p { font: 400 var(--fs-caption)/1.65 var(--font-sans); color: var(--lbc-gray-3); margin: 0; max-width: 680px; }
+  footer strong { color: var(--lbc-gray-2); }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="blob"></div>
+  <div class="blob1"></div>
   <div class="blob2"></div>
   <div class="header-inner">
-    <div class="logo">LITTLEBIG CONNECTION</div>
+    <svg width="169" height="32" viewBox="0 0 169 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="LittleBig Connection">
+      <path d="M51.797 0.909912V16.4939H62.731V14.0449H54.698V0.909912H51.797Z" fill="white"/>
+      <path d="M63.8427 4.91733V16.4943H66.6096V4.91733H63.8427ZM63.8427 0.909912V3.35889H66.6096V0.909912H63.8427ZM77.8743 7.14368V13.3774C77.8743 15.5147 78.7223 16.4943 80.8644 16.4943H83.7652V14.3348H81.5338C80.8421 14.3348 80.6412 14.0676 80.6412 13.3774V7.14368H83.7652V4.91733H80.6412V2.24572H77.8743V4.91733H73.2777V2.24572H70.5108V4.91733H67.7215V7.14368H70.5108V13.3774C70.5108 15.5147 71.3587 16.4943 73.5008 16.4943H75.9553V14.3348H74.1702C73.4785 14.3348 73.2777 14.0676 73.2777 13.3774V7.14368H77.8743Z" fill="white"/>
+      <path d="M85.212 0.909912V16.4939H87.979V0.909912H85.212Z" fill="white"/>
+      <path d="M0 0H21.334C24.5645 0 27.1793 2.61481 27.1793 5.84531V10.6489C27.1793 12.5989 26.2211 14.3245 24.7509 15.386C26.2211 16.4474 27.1793 18.1731 27.1793 20.123V24.9265C27.1793 28.157 24.5645 30.7719 21.334 30.7719H0V0Z" fill="white" opacity="0.001"/>
+    </svg>
+    <div class="eyebrow">Designers newsletter</div>
     <h1>Newsletter for the Designers of Future</h1>
-    <div class="subtitle">One scannable issue a week: what to try in your tools, and what's moving in the market around us. Synthesised from two upstream Monday briefings — read it in under five minutes.</div>
-    <div class="meta-row">
-      <span class="meta-chip" id="issue-chip">Issue: Jul 27, 2026</span>
-      <span class="meta-chip">Read time: ~4 min</span>
-      <span class="meta-chip">Next issue: Monday</span>
-      <span class="meta-chip">Archive: rolling 8 issues</span>
-      <span class="meta-chip">Distribution: manual — share this link yourself</span>
-    </div>
+    <p class="subtitle">One scannable issue a week: what to try in your tools, and what's moving in the market around us. Synthesised from two upstream briefings — read it in under five minutes.</p>
+    <div class="meta-row" id="meta-row"></div>
   </div>
 </header>
 
 <div class="wrap">
 
-  <nav>
-    <a href="#designers">This week for designers</a>
-    <a href="#competitive">Competitive watch</a>
-    <div class="archive-control">
-      <label for="archive-select">Viewing:</label>
-      <select id="archive-select"></select>
+  <nav class="jump">
+    <div class="jump-label">Jump to a section</div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="designers" type="button">This week for designers</button>
+      <button class="tab-btn" data-tab="competitive" type="button">Competitive watch</button>
     </div>
   </nav>
 
   <div id="archive-banner" class="archive-banner hidden">
     <span>You're viewing the archived issue from <strong id="archive-banner-date"></strong>.</span>
-    <button id="back-to-current-btn" type="button">Back to current</button>
+    <button class="btn-tonal-sm" id="back-to-current-btn" type="button">Back to current</button>
   </div>
 
-  <div id="current-view">
+  <p class="dek" id="dek"></p>
 
-    <p class="dek" id="current-dek"></p>
+  <div class="stats-grid" id="stats-grid"></div>
 
-    <div class="stats" id="current-stats"></div>
+  <section id="designers">
+    <div class="section-eyebrow">01 — This week for designers</div>
+    <h2>This week for designers</h2>
+    <p class="section-note">This week's most actionable AI updates for designers, with original confidence scores and sources.</p>
+    <div class="cards-grid two-col" id="ai-cards"></div>
+    <div class="section-cta">
+      <a class="btn-filled-sm" href="https://tsarkazaxov.github.io/ai-news-designers/" target="_blank" rel="noopener">See the full AI News for Designers digest <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </section>
 
-    <section id="designers">
-      <div class="section-head">
-        <span class="section-tag">01 — This week for designers</span>
-      </div>
-      <h2>This week for designers</h2>
-      <div class="section-note">The most actionable AI updates for your craft this week, carried from the AI News for Designers digest with their original confidence scores and sources.</div>
-      <div id="current-ai-cards"></div>
-      <a class="more-link" href="https://tsarkazaxov.github.io/ai-news-designers/" target="_blank" rel="noopener">See the full AI News for Designers digest <span class="arrow">→</span></a>
-    </section>
-
-    <section id="competitive">
-      <div class="section-head">
-        <span class="section-tag slate">02 — Competitive watch</span>
-      </div>
-      <h2>Competitive watch</h2>
-      <div class="section-note">Which freelance-marketplace competitors moved this week, from the Freelance Marketplaces competitive watch.</div>
-      <div id="current-comp-cards"></div>
-      <a class="more-link" href="https://tsarkazaxov.github.io/littlebig-competitive-watch/" target="_blank" rel="noopener">See the full Competitive Watch <span class="arrow">→</span></a>
-    </section>
-
-  </div>
-
-  <div id="archive-view" class="hidden">
-
-    <p class="dek" id="archive-dek"></p>
-
-    <div class="stats" id="archive-stats"></div>
-
-    <h3 class="archive-h">This week for designers</h3>
-    <div id="archive-ai-cards"></div>
-    <a class="more-link" href="https://tsarkazaxov.github.io/ai-news-designers/" target="_blank" rel="noopener">See the full AI News for Designers digest <span class="arrow">→</span></a>
-
-    <h3 class="archive-h">Competitive watch</h3>
-    <div id="archive-comp-cards"></div>
-    <a class="more-link" href="https://tsarkazaxov.github.io/littlebig-competitive-watch/" target="_blank" rel="noopener">See the full Competitive Watch <span class="arrow">→</span></a>
-
-  </div>
-
-  <footer id="methodology">
-    <strong>How this issue is made</strong> — This is a synthesis newsletter: it does no research of its own. It reads two upstream tasks that run earlier every Monday and compresses them into one issue. The first is the <strong>AI News for Designers</strong> weekly digest (<a href="https://tsarkazaxov.github.io/ai-news-designers/" target="_blank" rel="noopener">full digest</a>: Tools &amp; Workflow, Learning &amp; Career, World AI News); the second is the <strong>Freelance Marketplaces competitive watch</strong> (<a href="https://tsarkazaxov.github.io/littlebig-competitive-watch/" target="_blank" rel="noopener">full watch</a>), tracking Malt, Fiverr, Upwork, Lifted, Freelancer.com, LeHibou, Comet, Toptal, Deel and new entrants. Confidence percentages and source links are carried through exactly as scored upstream — nothing here is re-scored or re-verified. Use the "Viewing" dropdown above to browse the last 8 issues. Share this link with the Designers team yourself; there's no automated send.
-  </footer>
+  <section id="competitive">
+    <div class="section-eyebrow">02 — Competitive watch</div>
+    <h2>Competitive watch</h2>
+    <p class="section-note">Which freelance-marketplace competitors moved this week, from the Freelance Marketplaces competitive watch.</p>
+    <div id="comp-area"></div>
+    <div class="section-cta">
+      <a class="btn-filled-sm" href="https://tsarkazaxov.github.io/littlebig-competitive-watch/" target="_blank" rel="noopener">See the full Competitive Watch <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    </div>
+  </section>
 
 </div>
+
+<footer>
+  <div class="footer-inner">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    <p><strong>How this issue is made</strong> — this is a synthesis newsletter: it does no research of its own. It reads two upstream tasks that run earlier every Monday and compresses them into one issue: the <strong>AI News for Designers</strong> weekly digest and the <strong>Freelance Marketplaces competitive watch</strong>, tracking Malt, Fiverr, Upwork, Lifted, Freelancer.com, LeHibou, Comet, Toptal, Deel and new entrants. Confidence percentages and source links are carried through exactly as scored upstream — nothing here is re-scored or re-verified. Use the "Viewing" dropdown above to browse the last 8 issues. Share this link with the Designers team yourself — there's no automated send.</p>
+  </div>
+</footer>
 
 <script type="application/json" id="history-json">
 [
@@ -397,105 +361,206 @@
       }
     ],
     "competitiveRefreshed": false,
-    "competitiveNote": "Competitive watch — not refreshed this week. The GitHub Pages source still shows the July 10 capture (no fresh weekly data this pass), so nothing new is reported here rather than passing stale movement off as current. For reference, the last successful capture flagged two movers: Upwork refreshed its board (Claire Bramley, ex-Xero CFO, and David Lissy) and Toptal continued its acquisition streak (QO Collective and Adeva). Both will be re-verified once the source refreshes.",
+    "competitiveNote": "Competitive watch — not refreshed this week. The source still shows the July 10 capture (no fresh weekly data this pass), so nothing new is reported here rather than passing stale movement off as current. For reference, the last successful capture flagged two movers: Upwork refreshed its board (Claire Bramley, ex-Xero CFO, and David Lissy) and Toptal continued its acquisition streak (QO Collective and Adeva). Both will be re-verified once the source refreshes.",
     "competitive": []
   }
 ]
 </script>
 
 <script>
-  (function () {
-    var MAX_WEEKS = 8;
-    var history = JSON.parse(document.getElementById('history-json').textContent);
+(function () {
+  var MAX_WEEKS = 8;
+  var history = JSON.parse(document.getElementById('history-json').textContent);
+  var viewIndex = 0;
+  var expanded = {};
+  var activeSection = 'designers';
 
-    function confClass(c) { return c >= 90 ? 'conf-high' : (c >= 80 ? 'conf-mid' : 'conf-low'); }
+  var ICONS = {
+    calendar: '<path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/>',
+    event: '<path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><path d="M9 16l2 2 4-4"/>',
+    history: '<path d="M3 12a9 9 0 1 0 3-6.7"/><polyline points="3 4 3 9 8 9"/><polyline points="12 8 12 12 15 14"/>',
+    mail: '<path d="M3 8l9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="2"/>',
+    chevDown: '<polyline points="6 9 12 15 18 9"/>',
+    info: '<circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="7.5" r="0.6" fill="currentColor" stroke="none"/>'
+  };
+  function icon(name, size) {
+    return '<svg class="icon" style="width:' + (size||16) + 'px;height:' + (size||16) + 'px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + ICONS[name] + '</svg>';
+  }
 
-    function aiCard(item, rank) {
-      var sources = item.sources.map(function (s) {
-        return '<a class="source-link" href="' + s.url + '" target="_blank" rel="noopener">' + s.label + '</a>';
-      }).join('<span class="dot">•</span>');
-      return '<div class="card"><div class="rank">' + rank + '</div><div class="card-body">' +
-        '<div class="kicker">' + item.kicker + '</div>' +
-        '<div class="card-title">' + item.title + '</div>' +
-        '<div class="card-summary">' + item.summary + '</div>' +
-        '<div class="card-foot">' + sources + '<span class="dot">•</span><span class="date">' + item.date + '</span>' +
-        '<span class="confidence ' + confClass(item.confidence) + '">' + item.confidence + '% confidence</span></div></div></div>';
-    }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
 
-    function renderAiList(containerId, items) {
-      var el = document.getElementById(containerId);
-      if (!items || !items.length) {
-        el.innerHTML = '<div class="notice">No qualifying items recorded for this section that week.</div>';
-        return;
-      }
-      el.innerHTML = items.map(function (it, i) { return aiCard(it, i + 1); }).join('');
-    }
+  function confBadgeClass(score) {
+    return score >= 90 ? 'badge-soft-success' : (score >= 80 ? 'badge-soft-info' : 'badge-soft-warning');
+  }
+  function kickerBadgeClass(k) {
+    if (k.indexOf('Tools') === 0) return 'badge-soft-info';
+    if (k.indexOf('World') === 0) return 'badge-soft-ai';
+    return 'badge-soft-neutral';
+  }
 
-    function renderCompList(containerId, entry) {
-      var el = document.getElementById(containerId);
-      if (!entry.competitiveRefreshed || !entry.competitive || !entry.competitive.length) {
-        el.innerHTML = '<div class="notice">' + (entry.competitiveNote || 'No qualifying competitor movement this week.') + '</div>';
-      } else {
-        el.innerHTML = entry.competitive.map(function (it, i) { return aiCard(it, i + 1); }).join('');
-      }
-    }
+  function renderMetaRow() {
+    var current = history[0];
+    var chips = '';
+    chips += '<span class="meta-chip">' + icon('calendar', 15) + 'Issue: ' + esc(current.label.replace(' (current)', '')) + '</span>';
+    chips += '<span class="meta-chip">' + icon('clock', 15) + 'Read time: ~4 min</span>';
+    chips += '<span class="meta-chip">' + icon('event', 15) + 'Next issue: Monday</span>';
+    chips += '<span class="meta-chip">' + icon('history', 15) + 'Archive: rolling 8 issues</span>';
+    chips += '<span class="meta-chip">' + icon('mail', 15) + 'Distribution: manual — share this link yourself</span>';
+    chips += '<span class="meta-chip viewing-chip">' + icon('history', 15) +
+      'Viewing<select id="archive-select"></select>' +
+      '<span class="chev">' + icon('chevDown', 15) + '</span></span>';
+    document.getElementById('meta-row').innerHTML = chips;
 
-    function renderStats(containerId, stats) {
-      document.getElementById(containerId).innerHTML = stats.map(function (s) {
-        return '<div class="stat"><div class="num">' + s.value + '</div><div class="lbl">' + s.label + '</div></div>';
-      }).join('');
-    }
-
-    function renderCurrent() {
-      var latest = history[0];
-      if (!latest) return;
-      document.getElementById('current-dek').textContent = latest.dek || '';
-      renderStats('current-stats', latest.stats);
-      renderAiList('current-ai-cards', latest.aiNews);
-      renderCompList('current-comp-cards', latest);
-      document.getElementById('issue-chip').textContent = 'Issue: ' + latest.label.replace(' (current)', '');
-    }
-
-    function renderArchiveEntry(entry) {
-      document.getElementById('archive-dek').textContent = entry.dek || '';
-      renderStats('archive-stats', entry.stats);
-      renderAiList('archive-ai-cards', entry.aiNews);
-      renderCompList('archive-comp-cards', entry);
-      document.getElementById('archive-banner-date').textContent = entry.label.replace(' (current)', '');
-    }
-
-    function showCurrent() {
-      document.getElementById('current-view').classList.remove('hidden');
-      document.getElementById('archive-view').classList.add('hidden');
-      document.getElementById('archive-banner').classList.add('hidden');
-    }
-
-    function showArchive() {
-      document.getElementById('current-view').classList.add('hidden');
-      document.getElementById('archive-view').classList.remove('hidden');
-      document.getElementById('archive-banner').classList.remove('hidden');
-    }
-
-    function buildSelect() {
-      var select = document.getElementById('archive-select');
-      select.innerHTML = history.slice(0, MAX_WEEKS).map(function (entry, i) {
-        return '<option value="' + i + '">' + entry.label + '</option>';
-      }).join('');
-      select.addEventListener('change', function () {
-        var idx = parseInt(this.value, 10);
-        if (idx === 0) { showCurrent(); }
-        else { renderArchiveEntry(history[idx]); showArchive(); }
-      });
-    }
-
-    document.getElementById('back-to-current-btn').addEventListener('click', function () {
-      document.getElementById('archive-select').value = '0';
-      showCurrent();
+    var select = document.getElementById('archive-select');
+    select.innerHTML = history.slice(0, MAX_WEEKS).map(function (entry, i) {
+      return '<option value="' + i + '">' + esc(entry.label) + '</option>';
+    }).join('');
+    select.value = String(viewIndex);
+    select.addEventListener('change', function () {
+      viewIndex = parseInt(this.value, 10) || 0;
+      render();
     });
+  }
 
-    renderCurrent();
-    buildSelect();
-  })();
+  function buildClamp(key, text) {
+    var needsToggle = (text || '').length > 140;
+    var isOpen = !!expanded[key];
+    return {
+      needsToggle: needsToggle,
+      clampClass: (!needsToggle || isOpen) ? '' : 'clamp2',
+      toggleLabel: isOpen ? 'Read less' : 'Read more',
+      toggleIcon: isOpen ? 'chevDown' : 'chevDown'
+    };
+  }
+
+  function aiCardHtml(item, i, viewIdx) {
+    var key = 'ai-' + viewIdx + '-' + i;
+    var clamp = buildClamp(key, item.summary);
+    var sources = item.sources.map(function (s) {
+      return '<a class="source-link" href="' + s.url + '" target="_blank" rel="noopener">' + esc(s.label) + '</a><span class="dot-sep">•</span>';
+    }).join('');
+    return '<div class="ai-card">' +
+      '<span class="badge badge-solid-primary">' + (i + 1) + '</span>' +
+      '<div class="body">' +
+        '<div class="card-top-row">' +
+          '<span class="badge ' + kickerBadgeClass(item.kicker) + '">' + esc(item.kicker) + '</span>' +
+          '<span class="badge ' + confBadgeClass(item.confidence) + '" style="margin-left:auto;">' + item.confidence + '% confidence</span>' +
+        '</div>' +
+        '<div class="card-title">' + esc(item.title) + '</div>' +
+        '<p class="card-summary ' + clamp.clampClass + '">' + esc(item.summary) + '</p>' +
+        (clamp.needsToggle ? '<button class="read-toggle" data-toggle-key="' + key + '">' + clamp.toggleLabel + icon('chevDown', 17) + '</button>' : '') +
+        '<div class="card-foot">' + sources + '<span class="card-date">' + esc(item.date) + '</span></div>' +
+      '</div></div>';
+  }
+
+  function compCardHtml(item, i, viewIdx) {
+    var key = 'comp-' + viewIdx + '-' + i;
+    var clamp = buildClamp(key, item.summary);
+    var sources = (item.sources || []).map(function (s) {
+      return '<a class="source-link" href="' + s.url + '" target="_blank" rel="noopener">' + esc(s.label) + '</a>';
+    }).join('');
+    return '<div class="comp-card">' +
+      '<div class="comp-top"><span class="comp-name">' + esc(item.competitor) + '</span><span class="tag">' + esc(item.movementType) + '</span></div>' +
+      '<p class="card-summary ' + clamp.clampClass + '">' + esc(item.summary) + '</p>' +
+      (clamp.needsToggle ? '<button class="read-toggle" data-toggle-key="' + key + '">' + clamp.toggleLabel + icon('chevDown', 17) + '</button>' : '') +
+      '<div class="card-foot" style="margin-top:4px;">' + sources + '<span class="dot-sep">•</span><span class="card-date">' + esc(item.date) + '</span></div>' +
+    '</div>';
+  }
+
+  function attachToggles(container) {
+    container.querySelectorAll('[data-toggle-key]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-toggle-key');
+        expanded[key] = !expanded[key];
+        render();
+      });
+    });
+  }
+
+  function render() {
+    var entry = history[viewIndex] || history[0];
+
+    // archive banner
+    var banner = document.getElementById('archive-banner');
+    if (viewIndex !== 0) {
+      banner.classList.remove('hidden');
+      document.getElementById('archive-banner-date').textContent = entry.label.replace(' (current)', '');
+    } else {
+      banner.classList.add('hidden');
+    }
+
+    // dek
+    document.getElementById('dek').textContent = entry.dek || '';
+
+    // stats
+    document.getElementById('stats-grid').innerHTML = (entry.stats || []).map(function (s) {
+      return '<div class="stat-card"><div class="num">' + esc(s.value) + '</div><div class="lbl">' + esc(s.label) + '</div></div>';
+    }).join('');
+
+    // ai cards
+    var aiEl = document.getElementById('ai-cards');
+    if (entry.aiNews && entry.aiNews.length) {
+      aiEl.innerHTML = entry.aiNews.map(function (it, i) { return aiCardHtml(it, i, viewIndex); }).join('');
+    } else {
+      aiEl.innerHTML = '<div class="notice-card">' + icon('info', 19) + '<p>No qualifying items recorded for this section that week.</p></div>';
+    }
+
+    // competitive
+    var compEl = document.getElementById('comp-area');
+    var refreshed = !!entry.competitiveRefreshed && entry.competitive && entry.competitive.length > 0;
+    if (refreshed) {
+      compEl.innerHTML = '<div class="cards-grid two-col">' + entry.competitive.map(function (it, i) { return compCardHtml(it, i, viewIndex); }).join('') + '</div>';
+    } else {
+      compEl.innerHTML = '<div class="notice-card">' + icon('info', 19) + '<p>' + esc(entry.competitiveNote || 'No qualifying competitor movement recorded for this issue.') + '</p></div>';
+    }
+
+    attachToggles(aiEl);
+    attachToggles(compEl);
+
+    var select = document.getElementById('archive-select');
+    if (select) select.value = String(viewIndex);
+  }
+
+  document.getElementById('back-to-current-btn').addEventListener('click', function () {
+    viewIndex = 0;
+    render();
+  });
+
+  // tabs + scroll spy
+  var tabButtons = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+  tabButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var id = btn.getAttribute('data-tab');
+      var el = document.getElementById(id);
+      if (el) {
+        var y = el.getBoundingClientRect().top + window.pageYOffset - 76;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
+  });
+  function setActiveTab(id) {
+    activeSection = id;
+    tabButtons.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-tab') === id); });
+  }
+  var scrollRaf = null;
+  window.addEventListener('scroll', function () {
+    if (scrollRaf) return;
+    scrollRaf = requestAnimationFrame(function () {
+      scrollRaf = null;
+      var ids = ['designers', 'competitive'];
+      var current = ids[0];
+      for (var i = 0; i < ids.length; i++) {
+        var el = document.getElementById(ids[i]);
+        if (el && el.getBoundingClientRect().top <= 96) current = ids[i];
+      }
+      if (current !== activeSection) setActiveTab(current);
+    });
+  }, { passive: true });
+
+  renderMetaRow();
+  render();
+})();
 </script>
 
 </body>
