@@ -1,8 +1,8 @@
 <!DOCTYPE html><script type="application/json" id="cowork-artifact-meta">
 {
-  "name": "Newsletter Designers Of Future",
+  "name": "Newsletter for the Designers of Future",
   "schemaVersion": 1,
-  "description": "Weekly synthesis newsletter for the LBC Designers team. Compresses two upstream Monday tasks — the AI News for Designers digest and the Freelance Marketplaces competitive watch — into one sub-5-minute issue. Synthesis only; confidence % and sources carried through from upstream. Archive: rolling 8 issues. Issue #1: Jul 27, 2026."
+  "description": "Weekly synthesis newsletter for the LBC Designers team. Compresses two upstream Monday tasks — the AI News for Designers digest and the Freelance Marketplaces competitive watch — into one scannable, sub-5-minute issue. Synthesis only: no independent research; confidence % and sources carried through from the upstream sources. Includes a rolling 8-issue archive and deep-link buttons to the two upstream artifact pages."
 }
 </script>
 <html lang="en">
@@ -81,15 +81,31 @@
     font-weight: 600;
   }
 
-  /* Archive control bar */
-  .archive-bar {
-    display: flex; align-items: center; justify-content: flex-end; gap: 8px;
-    padding: 16px 0 0;
+  /* Nav + archive control */
+  nav {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    padding: 18px 0 6px;
+    position: sticky; top: 0;
+    background: var(--white);
+    z-index: 5;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 22px;
   }
-  .archive-bar label {
-    font-size: 11.5px; font-weight: 700; color: var(--slate);
+  nav a {
+    text-decoration: none;
+    color: var(--text-dark);
+    background: var(--white);
+    border: 1px solid var(--divider);
+    border-radius: 20px;
+    padding: 7px 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    transition: background 0.15s;
   }
-  .archive-bar select {
+  nav a:hover { background: var(--blob-blue); }
+  .archive-control { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+  .archive-control label { font-size: 11.5px; font-weight: 700; color: var(--slate); }
+  .archive-control select {
     font-family: inherit;
     font-size: 12.5px; font-weight: 600; color: var(--text-dark);
     border: 1px solid var(--divider);
@@ -104,7 +120,7 @@
     padding: 10px 16px;
     font-size: 12.5px;
     color: var(--text-dark);
-    margin-top: 14px;
+    margin-bottom: 24px;
     display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
   }
   .archive-banner button {
@@ -117,13 +133,13 @@
 
   .dek {
     font-size: 13.5px; color: var(--text-body); line-height: 1.6;
-    margin: 26px 0 4px; max-width: 660px;
+    margin: 4px 0 4px; max-width: 660px;
   }
 
   /* Stat callouts */
   .stats {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
-    margin: 26px 0 40px;
+    margin: 22px 0 40px;
   }
   .stat {
     background: var(--blob-blue);
@@ -142,11 +158,11 @@
   @media (max-width: 640px) {
     .stats { grid-template-columns: 1fr; }
     .stat { text-align: left; }
-    .archive-bar { justify-content: flex-start; }
+    .archive-control { margin-left: 0; width: 100%; }
   }
 
   /* Sections */
-  section { margin-bottom: 40px; scroll-margin-top: 20px; }
+  section { margin-bottom: 12px; scroll-margin-top: 70px; }
   .section-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; }
   .section-tag {
     font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px;
@@ -154,6 +170,7 @@
   }
   .section-tag.slate { color: var(--slate); }
   h2 { font-size: 20px; font-weight: 700; color: var(--text-dark); }
+  h3.archive-h { font-size: 15px; font-weight: 700; color: var(--text-dark); margin: 26px 0 10px; }
   .section-note {
     font-size: 12.5px; color: var(--text-muted); margin: 6px 0 18px; line-height: 1.5; max-width: 660px;
   }
@@ -216,10 +233,26 @@
     border-radius: 12px;
     padding: 16px 18px;
     font-size: 13px; color: var(--text-body); line-height: 1.6;
+    margin-bottom: 12px;
   }
   .notice strong { color: var(--text-dark); }
 
-  /* Footer */
+  /* Deep-link "more" button, one per section */
+  .more-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700; color: var(--blue-primary);
+    background: var(--blob-blue);
+    border: 1px solid var(--blue-tint);
+    border-radius: 20px;
+    padding: 8px 14px;
+    text-decoration: none;
+    margin: 4px 0 28px;
+  }
+  .more-link:hover { background: var(--blue-tint); }
+  .more-link .arrow { transition: transform 0.15s; }
+  .more-link:hover .arrow { transform: translateX(2px); }
+
+  /* Footer / methodology */
   footer {
     border-top: 1px solid var(--divider);
     padding-top: 20px;
@@ -253,40 +286,66 @@
 
 <div class="wrap">
 
-  <div class="archive-bar">
-    <label for="archive-select">Viewing:</label>
-    <select id="archive-select"></select>
-  </div>
+  <nav>
+    <a href="#designers">This week for designers</a>
+    <a href="#competitive">Competitive watch</a>
+    <div class="archive-control">
+      <label for="archive-select">Viewing:</label>
+      <select id="archive-select"></select>
+    </div>
+  </nav>
 
   <div id="archive-banner" class="archive-banner hidden">
     <span>You're viewing the archived issue from <strong id="archive-banner-date"></strong>.</span>
     <button id="back-to-current-btn" type="button">Back to current</button>
   </div>
 
-  <p class="dek" id="dek"></p>
+  <div id="current-view">
 
-  <div class="stats" id="stats"></div>
+    <p class="dek" id="current-dek"></p>
 
-  <section id="designers">
-    <div class="section-head">
-      <span class="section-tag">01 — This week for designers</span>
-    </div>
-    <h2>This week for designers</h2>
-    <div class="section-note">The most actionable AI updates for your craft this week, carried from the AI News for Designers digest with their original confidence scores and sources.</div>
-    <div id="ai-cards"></div>
-  </section>
+    <div class="stats" id="current-stats"></div>
 
-  <section id="competitive">
-    <div class="section-head">
-      <span class="section-tag slate">02 — Competitive watch</span>
-    </div>
-    <h2>Competitive watch</h2>
-    <div class="section-note">Which freelance-marketplace competitors moved this week, from the Freelance Marketplaces competitive watch.</div>
-    <div id="comp-cards"></div>
-  </section>
+    <section id="designers">
+      <div class="section-head">
+        <span class="section-tag">01 — This week for designers</span>
+      </div>
+      <h2>This week for designers</h2>
+      <div class="section-note">The most actionable AI updates for your craft this week, carried from the AI News for Designers digest with their original confidence scores and sources.</div>
+      <div id="current-ai-cards"></div>
+      <a class="more-link" href="https://tsarkazaxov.github.io/ai-news-designers/" target="_blank" rel="noopener">See the full AI News for Designers digest <span class="arrow">→</span></a>
+    </section>
 
-  <footer>
-    <strong>How this issue is made</strong> — This is a synthesis newsletter: it does no research of its own. It reads two upstream tasks that run earlier every Monday and compresses them into one issue. The first is the <strong>AI News for Designers</strong> weekly digest (Tools &amp; Workflow, Learning &amp; Career, World AI News); the second is the <strong>Freelance Marketplaces competitive watch</strong> (<a href="https://tsarkazaxov.github.io/littlebig-competitive-watch/" target="_blank" rel="noopener">GitHub Pages</a>), tracking Malt, Fiverr, Upwork, Lifted, Freelancer.com, LeHibou, Comet, Toptal, Deel and new entrants. Confidence percentages and source links are carried through exactly as scored upstream — nothing here is re-scored or re-verified. Use the "Viewing" dropdown above to browse the last 8 issues. Share this link with the Designers team yourself; there's no automated send.
+    <section id="competitive">
+      <div class="section-head">
+        <span class="section-tag slate">02 — Competitive watch</span>
+      </div>
+      <h2>Competitive watch</h2>
+      <div class="section-note">Which freelance-marketplace competitors moved this week, from the Freelance Marketplaces competitive watch.</div>
+      <div id="current-comp-cards"></div>
+      <a class="more-link" href="https://tsarkazaxov.github.io/littlebig-competitive-watch/" target="_blank" rel="noopener">See the full Competitive Watch <span class="arrow">→</span></a>
+    </section>
+
+  </div>
+
+  <div id="archive-view" class="hidden">
+
+    <p class="dek" id="archive-dek"></p>
+
+    <div class="stats" id="archive-stats"></div>
+
+    <h3 class="archive-h">This week for designers</h3>
+    <div id="archive-ai-cards"></div>
+    <a class="more-link" href="https://tsarkazaxov.github.io/ai-news-designers/" target="_blank" rel="noopener">See the full AI News for Designers digest <span class="arrow">→</span></a>
+
+    <h3 class="archive-h">Competitive watch</h3>
+    <div id="archive-comp-cards"></div>
+    <a class="more-link" href="https://tsarkazaxov.github.io/littlebig-competitive-watch/" target="_blank" rel="noopener">See the full Competitive Watch <span class="arrow">→</span></a>
+
+  </div>
+
+  <footer id="methodology">
+    <strong>How this issue is made</strong> — This is a synthesis newsletter: it does no research of its own. It reads two upstream tasks that run earlier every Monday and compresses them into one issue. The first is the <strong>AI News for Designers</strong> weekly digest (<a href="https://tsarkazaxov.github.io/ai-news-designers/" target="_blank" rel="noopener">full digest</a>: Tools &amp; Workflow, Learning &amp; Career, World AI News); the second is the <strong>Freelance Marketplaces competitive watch</strong> (<a href="https://tsarkazaxov.github.io/littlebig-competitive-watch/" target="_blank" rel="noopener">full watch</a>), tracking Malt, Fiverr, Upwork, Lifted, Freelancer.com, LeHibou, Comet, Toptal, Deel and new entrants. Confidence percentages and source links are carried through exactly as scored upstream — nothing here is re-scored or re-verified. Use the "Viewing" dropdown above to browse the last 8 issues. Share this link with the Designers team yourself; there's no automated send.
   </footer>
 
 </div>
@@ -346,7 +405,7 @@
 
 <script>
   (function () {
-    var MAX_ISSUES = 8;
+    var MAX_WEEKS = 8;
     var history = JSON.parse(document.getElementById('history-json').textContent);
 
     function confClass(c) { return c >= 90 ? 'conf-high' : (c >= 80 ? 'conf-mid' : 'conf-low'); }
@@ -363,57 +422,78 @@
         '<span class="confidence ' + confClass(item.confidence) + '">' + item.confidence + '% confidence</span></div></div></div>';
     }
 
-    function renderIssue(entry) {
-      if (!entry) return;
-      document.getElementById('issue-chip').textContent = 'Issue: ' + entry.label.replace(' (current)', '');
-      document.getElementById('dek').textContent = entry.dek || '';
+    function renderAiList(containerId, items) {
+      var el = document.getElementById(containerId);
+      if (!items || !items.length) {
+        el.innerHTML = '<div class="notice">No qualifying items recorded for this section that week.</div>';
+        return;
+      }
+      el.innerHTML = items.map(function (it, i) { return aiCard(it, i + 1); }).join('');
+    }
 
-      document.getElementById('stats').innerHTML = (entry.stats || []).map(function (s) {
-        return '<div class="stat"><div class="num">' + s.value + '</div><div class="lbl">' + s.label + '</div></div>';
-      }).join('');
-
-      document.getElementById('ai-cards').innerHTML = (entry.aiNews || []).map(function (it, i) {
-        return aiCard(it, i + 1);
-      }).join('');
-
-      var compEl = document.getElementById('comp-cards');
+    function renderCompList(containerId, entry) {
+      var el = document.getElementById(containerId);
       if (!entry.competitiveRefreshed || !entry.competitive || !entry.competitive.length) {
-        compEl.innerHTML = '<div class="notice">' + (entry.competitiveNote || 'No qualifying competitor movement this week.') + '</div>';
+        el.innerHTML = '<div class="notice">' + (entry.competitiveNote || 'No qualifying competitor movement this week.') + '</div>';
       } else {
-        compEl.innerHTML = entry.competitive.map(function (it, i) { return aiCard(it, i + 1); }).join('');
+        el.innerHTML = entry.competitive.map(function (it, i) { return aiCard(it, i + 1); }).join('');
       }
     }
 
-    function showCurrentBanner(isCurrent, entry) {
-      var banner = document.getElementById('archive-banner');
-      if (isCurrent) {
-        banner.classList.add('hidden');
-      } else {
-        document.getElementById('archive-banner-date').textContent = entry.label.replace(' (current)', '');
-        banner.classList.remove('hidden');
-      }
+    function renderStats(containerId, stats) {
+      document.getElementById(containerId).innerHTML = stats.map(function (s) {
+        return '<div class="stat"><div class="num">' + s.value + '</div><div class="lbl">' + s.label + '</div></div>';
+      }).join('');
+    }
+
+    function renderCurrent() {
+      var latest = history[0];
+      if (!latest) return;
+      document.getElementById('current-dek').textContent = latest.dek || '';
+      renderStats('current-stats', latest.stats);
+      renderAiList('current-ai-cards', latest.aiNews);
+      renderCompList('current-comp-cards', latest);
+      document.getElementById('issue-chip').textContent = 'Issue: ' + latest.label.replace(' (current)', '');
+    }
+
+    function renderArchiveEntry(entry) {
+      document.getElementById('archive-dek').textContent = entry.dek || '';
+      renderStats('archive-stats', entry.stats);
+      renderAiList('archive-ai-cards', entry.aiNews);
+      renderCompList('archive-comp-cards', entry);
+      document.getElementById('archive-banner-date').textContent = entry.label.replace(' (current)', '');
+    }
+
+    function showCurrent() {
+      document.getElementById('current-view').classList.remove('hidden');
+      document.getElementById('archive-view').classList.add('hidden');
+      document.getElementById('archive-banner').classList.add('hidden');
+    }
+
+    function showArchive() {
+      document.getElementById('current-view').classList.add('hidden');
+      document.getElementById('archive-view').classList.remove('hidden');
+      document.getElementById('archive-banner').classList.remove('hidden');
     }
 
     function buildSelect() {
       var select = document.getElementById('archive-select');
-      select.innerHTML = history.slice(0, MAX_ISSUES).map(function (entry, i) {
+      select.innerHTML = history.slice(0, MAX_WEEKS).map(function (entry, i) {
         return '<option value="' + i + '">' + entry.label + '</option>';
       }).join('');
       select.addEventListener('change', function () {
         var idx = parseInt(this.value, 10);
-        renderIssue(history[idx]);
-        showCurrentBanner(idx === 0, history[idx]);
+        if (idx === 0) { showCurrent(); }
+        else { renderArchiveEntry(history[idx]); showArchive(); }
       });
     }
 
     document.getElementById('back-to-current-btn').addEventListener('click', function () {
       document.getElementById('archive-select').value = '0';
-      renderIssue(history[0]);
-      showCurrentBanner(true, history[0]);
+      showCurrent();
     });
 
-    renderIssue(history[0]);
-    showCurrentBanner(true, history[0]);
+    renderCurrent();
     buildSelect();
   })();
 </script>
