@@ -535,6 +535,7 @@ try {
 
   // tabs + scroll spy
   var tabButtons = Array.prototype.slice.call(document.querySelectorAll('.tab-btn'));
+  var suppressSpyUntil = 0; // timestamp: while now < this, ignore scroll-spy (a click is authoritative)
   function setActiveTab(id) {
     activeSection = id;
     tabButtons.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-tab') === id); });
@@ -543,6 +544,10 @@ try {
     btn.addEventListener('click', function () {
       var id = btn.getAttribute('data-tab');
       setActiveTab(id); // update active state immediately, independent of whether scrolling succeeds
+      // A smooth scrollIntoView fires many intermediate 'scroll' events while the OTHER
+      // section is still the one nearest the top; without this guard the scroll-spy below
+      // would flip the active tab back and forth (or leave the wrong one active) mid-animation.
+      suppressSpyUntil = Date.now() + 900;
       var el = document.getElementById(id);
       if (el && typeof el.scrollIntoView === 'function') {
         try { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
@@ -567,6 +572,7 @@ try {
     if (scrollRaf) return;
     scrollRaf = requestAnimationFrame(function () {
       scrollRaf = null;
+      if (Date.now() < suppressSpyUntil) return; // a click just happened — let it settle
       var ids = ['designers', 'competitive'];
       var current = ids[0];
       for (var i = 0; i < ids.length; i++) {
