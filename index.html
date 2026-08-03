@@ -322,13 +322,97 @@
 <script type="application/json" id="history-json">
 [
   {
+    "date": "2026-08-03",
+    "label": "Aug 3, 2026 (current)",
+    "dek": "This week's picks cluster around one shift: image generation is going multimodal. FLUX 3 folds image, video and native audio into a single model, and Qwen-Image-3.0 finally renders legible small text and dense infographics in one pass — with Claude Opus 5 landing for context. The competitive-watch source didn't refresh this pass, so that section is held honestly rather than filled with stale movement.",
+    "stats": [
+      {
+        "value": "3",
+        "label": "AI updates picked for designers this week"
+      },
+      {
+        "value": "2",
+        "label": "New image/video models designers can put to work"
+      },
+      {
+        "value": "—",
+        "label": "Competitive watch not refreshed this week"
+      }
+    ],
+    "aiNews": [
+      {
+        "kicker": "Tools & Workflow",
+        "title": "Black Forest Labs launches FLUX 3 — one model for image, video and native audio",
+        "summary": "The team behind the FLUX image models unveiled its first multimodal frontier model: a single network that edits images, renders readable text, and generates video clips up to 20 seconds long with native audio. FLUX 3 Video is in gated early access now, image generation follows in the coming weeks, and an open-weight FLUX 3 Dev backbone is planned later. For designers this collapses three separate tools — image, motion and sound — into one pipeline, which is exactly where moodboards, animated concepts and asset generation are heading. Worth requesting early access if motion is creeping into your work, so you can judge output quality before it becomes a default part of the stack.",
+        "sources": [
+          {
+            "label": "Black Forest Labs (press release)",
+            "url": "https://www.globenewswire.com/news-release/2026/07/23/3332364/0/en/black-forest-labs-unveils-flux-3-a-new-multimodal-frontier-model-for-visual-intelligence.html"
+          },
+          {
+            "label": "MarkTechPost",
+            "url": "https://www.marktechpost.com/2026/07/26/black-forest-labs-releases-flux-3-a-multimodal-flow-model-for-image-video-audio-and-robot-action-prediction/"
+          }
+        ],
+        "date": "Jul 23, 2026",
+        "confidence": 87
+      },
+      {
+        "kicker": "Tools & Workflow",
+        "title": "Alibaba's Qwen-Image-3.0 renders legible small text and full infographic grids in one pass",
+        "summary": "Qwen's third-generation image model is tuned for practical output rather than pure aesthetics. It accepts up to 4.5K tokens of input and can render dense infographic grids, multi-panel layouts, mathematical formulas, twelve languages, and text as small as ten pixels — all in a single pass. That legibility is the real story for designers: most image models still mangle small type and structured layouts, so a model that handles content-heavy visuals cleanly is genuinely useful for mockups and data-rich screens. One caveat carried from the source: it shipped without benchmarks, a technical report or open weights this time, so treat capability claims as provisional and test on your own layouts. API trials are on chat.qwen.ai.",
+        "sources": [
+          {
+            "label": "The Decoder",
+            "url": "https://the-decoder.com/alibabas-qwen-image-3-0-renders-full-infographic-grids-and-readable-ten-pixel-text-in-a-single-pass/"
+          },
+          {
+            "label": "Unite.AI",
+            "url": "https://www.unite.ai/alibaba-launches-qwen-image-3-0-without-benchmarks-or-weights/"
+          }
+        ],
+        "date": "Jul 21, 2026",
+        "confidence": 83
+      },
+      {
+        "kicker": "World AI News",
+        "title": "Anthropic launches Claude Opus 5 — flagship performance with a cost/capability 'effort dial'",
+        "summary": "Anthropic released Claude Opus 5, its new flagship, and added an 'effort dial' that lets users trade compute for cost on a per-task basis. Opus 5 becomes the default for Claude Max subscribers and is priced the same as Opus 4.8 ($5/$25 per million in/out tokens) — Anthropic's fourth Claude 5 release in under two months. This is context rather than a Monday-morning tool, but the effort dial matters for anyone designing AI features: it turns 'how much thinking this task deserves' into a product decision rather than a fixed model choice, which is the kind of control that surfaces in UX sooner than most model launches do. Keep it on the radar as the release cadence keeps accelerating.",
+        "sources": [
+          {
+            "label": "Anthropic Newsroom",
+            "url": "https://www.anthropic.com/news/claude-opus-5"
+          },
+          {
+            "label": "VentureBeat",
+            "url": "https://venturebeat.com/orchestration/anthropic-launches-claude-opus-5-a-cheaper-ai-model-for-coding-agents-and-enterprise-workflows"
+          }
+        ],
+        "date": "Jul 24, 2026",
+        "confidence": 95
+      }
+    ],
+    "competitiveRefreshed": false,
+    "competitiveNote": "Competitive watch — not refreshed this week. The GitHub Pages source still shows the July 10 capture with no fresh weekly data this pass, so no movement is reported here rather than passing stale data off as current. For reference, the last successful capture flagged two movers — Upwork's board refreshment (Claire Bramley, ex-Xero CFO, and David Lissy) and Toptal's continued acquisition streak (QO Collective and Adeva). Both will be re-verified once the source refreshes.",
+    "competitive": []
+  },
+  {
     "date": "2026-07-27",
-    "label": "Jul 27, 2026 (current)",
+    "label": "Jul 27, 2026",
     "dek": "This week's tool news leans hard into the canvas-meets-code trend, plus a notable new open model for context. The competitive watch source didn't refresh this pass, so that section is held honestly rather than filled with stale movement.",
     "stats": [
-      { "value": "3", "label": "AI updates picked for designers this week" },
-      { "value": "2", "label": "Design tools shipping new AI capabilities (Figma, Canva)" },
-      { "value": "—", "label": "Competitive watch not refreshed this week" }
+      {
+        "value": "3",
+        "label": "AI updates picked for designers this week"
+      },
+      {
+        "value": "2",
+        "label": "Design tools shipping new AI capabilities (Figma, Canva)"
+      },
+      {
+        "value": "—",
+        "label": "Competitive watch not refreshed this week"
+      }
     ],
     "aiNews": [
       {
@@ -336,8 +420,14 @@
         "title": "Figma starts rolling out Code Layers — turn any design layer into live code",
         "summary": "The Config 2026 headline feature is now shipping in closed beta: convert a design layer into interactive code with a click or a prompt, duplicate it to compare directions side by side, and pull a GitHub repo or local folder straight into the file. It's rolling out over the coming weeks via a waitlist at figma.com/config-betas. For designers this is the clearest sign yet that the canvas and the codebase are collapsing into one surface — prototypes stop being throwaway artefacts and start carrying real, testable behaviour, which changes what a 'design' is even expected to hand over. Worth joining the waitlist early so you can shape how it fits your team's handoff before it becomes the default.",
         "sources": [
-          { "label": "Figma Blog", "url": "https://www.figma.com/blog/code-on-the-figma-canvas/" },
-          { "label": "Figma Release Notes", "url": "https://www.figma.com/release-notes/" }
+          {
+            "label": "Figma Blog",
+            "url": "https://www.figma.com/blog/code-on-the-figma-canvas/"
+          },
+          {
+            "label": "Figma Release Notes",
+            "url": "https://www.figma.com/release-notes/"
+          }
         ],
         "date": "Jul 2026",
         "confidence": 90
@@ -347,8 +437,14 @@
         "title": "Canva Code 2.0 is now free for everyone",
         "summary": "Canva's vibe-coding tool — prompt to an interactive design or website — opened to the whole community, free accounts included. Generation is about 75% faster, with 50+ new templates, HTML import, and the ability to drop Canva Code straight into a page, whiteboard or deck. The designer takeaway is less about whether you use it yourself and more about who else now can: marketing and cross-functional colleagues can ship interactive assets with no design handoff at all. That's an opportunity and a risk — it's worth getting ahead of where these assets land, so the team can set light guardrails on brand and UX quality before ad-hoc interactive pieces start appearing in production.",
         "sources": [
-          { "label": "Canva Newsroom", "url": "https://www.canva.com/newsroom/news/Canva-Code/" },
-          { "label": "VentureBeat", "url": "https://venturebeat.com/technology/canva-launches-code-2-0-offering-ai-website-building-to-every-user-including-free-accounts" }
+          {
+            "label": "Canva Newsroom",
+            "url": "https://www.canva.com/newsroom/news/Canva-Code/"
+          },
+          {
+            "label": "VentureBeat",
+            "url": "https://venturebeat.com/technology/canva-launches-code-2-0-offering-ai-website-building-to-every-user-including-free-accounts"
+          }
         ],
         "date": "Jul 2026",
         "confidence": 92
@@ -358,8 +454,14 @@
         "title": "Thinking Machines open-sources Inkling — Mira Murati's first model",
         "summary": "The lab founded by ex-OpenAI CTO Mira Murati released its first model under Apache 2.0: natively multimodal (text, image, audio, video), a mixture-of-experts design with 975B total / ~41B active parameters, tuned for calibrated answers and adjustable 'thinking effort'. Weights are on Hugging Face and the company's Tinker API. This is context rather than a Monday-morning tool — but it matters for designers indirectly: every credible new open multimodal model lowers the cost of building AI features into the products we design, and 'calibrated confidence' is exactly the kind of behaviour that makes AI outputs safer to surface in a UI. Keep it on the radar as a signal of where affordable, embeddable AI is heading.",
         "sources": [
-          { "label": "TechCrunch", "url": "https://techcrunch.com/2026/07/15/thinking-machines-amps-up-its-bet-against-one-size-fits-all-ai-with-its-first-open-model-inkling/" },
-          { "label": "VentureBeat", "url": "https://venturebeat.com/technology/thinking-machines-open-sources-first-multimodal-language-model-inkling-focused-on-low-cost-and-resistance-to-censorship" }
+          {
+            "label": "TechCrunch",
+            "url": "https://techcrunch.com/2026/07/15/thinking-machines-amps-up-its-bet-against-one-size-fits-all-ai-with-its-first-open-model-inkling/"
+          },
+          {
+            "label": "VentureBeat",
+            "url": "https://venturebeat.com/technology/thinking-machines-open-sources-first-multimodal-language-model-inkling-focused-on-low-cost-and-resistance-to-censorship"
+          }
         ],
         "date": "Jul 15, 2026",
         "confidence": 93
